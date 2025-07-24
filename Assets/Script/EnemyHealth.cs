@@ -20,9 +20,24 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    public GameObject healthItemPrefab;
+    public GameObject vulnerabilityItemPrefab;
+
     void Die()
     {
         Debug.Log("Enemy died!");
+        float rand = Random.value; // giá trị từ 0 đến 1
+        if (rand < 0.15f) // 15% invisible
+        {
+            if (vulnerabilityItemPrefab != null)
+                Instantiate(vulnerabilityItemPrefab, transform.position, Quaternion.identity);
+        }
+        else if (rand < 0.45f) // 30% heal (0.15 -> 0.45)
+        {
+            if (healthItemPrefab != null)
+                Instantiate(healthItemPrefab, transform.position, Quaternion.identity);
+        }
+        // 55% còn lại không rơi gì
         Destroy(gameObject);
     }
 }

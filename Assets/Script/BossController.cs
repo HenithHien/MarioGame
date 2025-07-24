@@ -49,6 +49,14 @@ public class BossController : MonoBehaviour
     private bool isMovingToPhase2Waypoint = false;
     private bool hasBuffedPhase2 = false;
 
+    [Header("Summon Settings")]
+    private int maxSummonedEnemies = 4;
+    public GameObject enemyPrefab; // Prefab quái triệu hồi
+    public Transform[] spawnPoints; // Các điểm spawn
+    public float summonInterval = 5f; // Thời gian giữa các lần triệu hồi
+    private float summonTimer = 0f;
+    private bool canSummon = false;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -68,6 +76,8 @@ public class BossController : MonoBehaviour
         Debug.Log("PHASE 2 TỚI! Boss đã vào giai đoạn 2!");
         isPhase2 = true;
         isMovingToPhase2Waypoint = true;
+        canSummon = true; // Bắt đầu cho phép triệu hồi quái
+        summonTimer = summonInterval; // Reset timer
     }
 
     void Update()
@@ -104,7 +114,7 @@ public class BossController : MonoBehaviour
         {
             rb.linearVelocity = Vector2.zero;
             return; // đứng im trong thời gian báo hiệu dive
-        }
+}
 
         if (isDiving)
         {
@@ -115,6 +125,16 @@ public class BossController : MonoBehaviour
         HandlePatrol();
         HandleShoot();
         HandleDiveCheck();
+        // Triệu hồi quái phase 2
+        if (canSummon)
+        {
+            summonTimer -= Time.deltaTime;
+            if (summonTimer <= 0f)
+            {
+                SummonEnemies();
+                summonTimer = summonInterval;
+            }
+        }
     }
 
     void HandlePatrol()
@@ -209,8 +229,7 @@ public class BossController : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         animator.Play("Eagle-Animation");
     }
-
-    void MoveToPhase2Waypoint()
+void MoveToPhase2Waypoint()
     {
         if (patrolPoints.Length == 0) return;
         Vector2 target = patrolPoints[currentPatrolIndex].position;
@@ -287,4 +306,18 @@ public class BossController : MonoBehaviour
         transform.localScale = new Vector3(3, 3, 1);  // sang trái
 }
 
+    void SummonEnemies()
+    {
+        if (enemyPrefab == null || spawnPoints == null || spawnPoints.Length == 0) return;
+        int currentEnemies = GameObject.FindGameObjectsWithTag(enemyPrefab.tag).Length;
+        if (currentEnemies >= maxSummonedEnemies) return;
+        foreach (Transform spawn in spawnPoints)
+        {
+            // Kiểm tra lại sau mỗi lần spawn
+            currentEnemies = GameObject.FindGameObjectsWithTag(enemyPrefab.tag).Length;
+            if (currentEnemies >= maxSummonedEnemies) break;
+            Instantiate(enemyPrefab, spawn.position, Quaternion.identity);
+        }
+        Debug.Log("Boss đã triệu hồi quái!");
+    }
 }

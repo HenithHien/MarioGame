@@ -6,12 +6,9 @@ public class Moving : MonoBehaviour
     [SerializeField] private Transform positionB;
     [SerializeField] private float speed = 2f;
     private Vector3 target;
-    private Vector3 originalScale;
-    private Transform player;
     void Start()
     {
         target = positionA.position;
-        originalScale = GameObject.FindWithTag("Player").transform.localScale;
     }
 
     // Update is called once per frame
@@ -32,21 +29,6 @@ public class Moving : MonoBehaviour
         }
 
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
+    
 
-            collision.transform.SetParent(transform, true);
-            collision.transform.localScale = originalScale;
-        }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if(collision.gameObject.CompareTag("Player"))
-        {
-            
-            collision.transform.SetParent(null);
-        }
-    }
 }

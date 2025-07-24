@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5872439115978123229}
   - component: {fileID: 1447358566636465383}
   - component: {fileID: 3118143511705479746}
+  - component: {fileID: 6643705006437245597}
   m_Layer: 0
   m_Name: EnemyBear
   m_TagString: Enemy
@@ -186,3 +187,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  healthItemPrefab: {fileID: 6638522087980360733, guid: dfb397ebe7df50b4bbeaffac7ce8a380, type: 3}
+  vulnerabilityItemPrefab: {fileID: 6638522087980360733, guid: 7984deefffb83f842bd1871052a1f900, type: 3}
+--- !u!50 &6643705006437245597
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2632211269463278717}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

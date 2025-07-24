@@ -52,6 +52,8 @@ public class GameMenuUIManager : MonoBehaviour
     // Gọi khi bấm nút từng map (ví dụ map1, map2,...)
     public void LoadSceneByName(string sceneName)
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(sceneName);
+        
     }
 }

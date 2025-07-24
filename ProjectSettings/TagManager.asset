@@ -12,6 +12,8 @@ TagManager:
   - DieTrap
   - EnemyBullet
   - Boss
+  - Heal
+  - Invisible
   layers:
   - Default
   - TransparentFX
